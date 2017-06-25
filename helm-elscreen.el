@@ -15,6 +15,10 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+;;; Commentary:
+;;
+;; helm-elscreen is a Helm interface for Elscreen.
+
 ;;; Code:
 (require 'cl-lib)
 (require 'helm)
@@ -25,7 +29,8 @@
 (declare-function elscreen-get-conf-list "ext:elscreen.el" (type))
 
 (defun helm-find-buffer-on-elscreen (candidate)
-  "Open buffer in new screen, if marked buffers open all in elscreens."
+  "Open CANDIDATE buffer in new elscreen.
+If marked buffers, open all in elscreens."
   (helm-require-or-error 'elscreen 'helm-find-buffer-on-elscreen)
   (helm-aif (helm-marked-candidates)
       (cl-dolist (i it)
@@ -37,6 +42,8 @@
       (elscreen-goto target-screen))))
 
 (defun helm-elscreen-find-file (file)
+  "Switch to a elscreen visiting FILE.
+If none already exists, creating one."
   (helm-require-or-error 'elscreen 'helm-elscreen-find-file)
   (elscreen-find-file file))
 
