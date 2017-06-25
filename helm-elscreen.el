@@ -1,6 +1,12 @@
-;;; helm-elscreen.el -- Elscreen support -*- lexical-binding: t -*-
+;;; helm-elscreen.el --- Elscreen support -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2012 ~ 2017 Thierry Volpiatto <thierry.volpiatto@gmail.com>
+
+;; Author: Thierry Volpiatto <thierry.volpiatto@gmail.com>
+;; Version: 1.0
+;; Keywords: files, convenience
+;; URL: https://github.com/emacs-helm/helm-elscreen
+;; Package-Requires: ((emacs "24"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -28,7 +34,7 @@
 (declare-function elscreen-goto "ext:elscreen.el" (screen))
 (declare-function elscreen-get-conf-list "ext:elscreen.el" (type))
 
-(defun helm-find-buffer-on-elscreen (candidate)
+(defun helm-elscreen-find-buffer (candidate)
   "Open CANDIDATE buffer in new elscreen.
 If marked buffers, open all in elscreens."
   (helm-require-or-error 'elscreen 'helm-find-buffer-on-elscreen)
@@ -41,13 +47,16 @@ If marked buffers, open all in elscreens."
                           (get-buffer candidate) 'create)))
       (elscreen-goto target-screen))))
 
+;; For compatibility
+(defalias 'helm-find-buffer-on-elscreen 'helm-elscreen-find-buffer)
+
 (defun helm-elscreen-find-file (file)
   "Switch to a elscreen visiting FILE.
 If none already exists, creating one."
   (helm-require-or-error 'elscreen 'helm-elscreen-find-file)
   (elscreen-find-file file))
 
-(defclass helm-source-elscreen (helm-source-sync)
+(defclass helm-elscreen-source (helm-source-sync)
   ((candidates
     :initform
     (lambda ()
@@ -70,7 +79,7 @@ If none already exists, creating one."
                 (elscreen-kill-others)))))
    (migemo :initform t)))
 
-(defclass helm-source-elscreen-history (helm-source-elscreen)
+(defclass helm-elscreen-source-history (helm-elscreen-source)
   ((candidates
     :initform
     (lambda ()
@@ -80,23 +89,23 @@ If none already exists, creating one."
                 collect (cons (format "[%d] %s" screen (cdr (assq screen sname)))
                               screen))))))))
 
-(defvar helm-source-elscreen-list
-  (helm-make-source "ElScreen" 'helm-source-elscreen))
+(defvar helm-elscreen-source-list
+  (helm-make-source "ElScreen" 'helm-elscreen-source))
 
-(defvar helm-source-elscreen-history-list
-  (helm-make-source "ElScreen History" 'helm-source-elscreen-history))
+(defvar helm-elscreen-source-history-list
+  (helm-make-source "ElScreen History" 'helm-elscreen-source-history))
 
 ;;;###autoload
 (defun helm-elscreen ()
   "Preconfigured helm to list elscreen."
   (interactive)
-  (helm-other-buffer 'helm-source-elscreen-list "*Helm ElScreen*"))
+  (helm-other-buffer 'helm-elscreen-source-list "*Helm ElScreen*"))
 
 ;;;###autoload
 (defun helm-elscreen-history ()
   "Preconfigured helm to list elscreen in history order."
   (interactive)
-  (helm-other-buffer 'helm-source-elscreen-history-list "*Helm ElScreen*"))
+  (helm-other-buffer 'helm-elscreen-source-history-list "*Helm ElScreen*"))
 
 (provide 'helm-elscreen)
 
