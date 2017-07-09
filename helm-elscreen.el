@@ -6,7 +6,7 @@
 ;; Version: 1.0
 ;; Keywords: files, convenience
 ;; URL: https://github.com/emacs-helm/helm-elscreen
-;; Package-Requires: ((emacs "24") (helm "2.8.0") (elscreen "0") cl-lib)
+;; Package-Requires: ((emacs "24") (helm "2.8.0") (elscreen "0") (cl-lib "0.5"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
