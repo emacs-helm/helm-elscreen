@@ -28,6 +28,7 @@
 ;;; Code:
 (require 'cl-lib)
 (require 'helm)
+(require 'helm-utils)
 
 (declare-function elscreen-find-screen-by-buffer "ext:elscreen.el" (buffer &optional create))
 (declare-function elscreen-find-file "ext:elscreen.el" (filename))
