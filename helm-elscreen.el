@@ -1,4 +1,4 @@
-;;; helm-elscreen.el --- Elscreen support -*- lexical-binding: t -*-
+;;; helm-elscreen.el --- Elscreen with helm interface -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2012 ~ 2017 Thierry Volpiatto <thierry.volpiatto@gmail.com>
 
@@ -6,7 +6,7 @@
 ;; Version: 1.0
 ;; Keywords: files, convenience
 ;; URL: https://github.com/emacs-helm/helm-elscreen
-;; Package-Requires: ((emacs "24"))
+;; Package-Requires: ((emacs "24") (helm "2.8.0") (elscreen "0") cl-lib)
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 ;;; Code:
 (require 'cl-lib)
 (require 'helm)
+(require 'helm-utils)
 
 (declare-function elscreen-find-screen-by-buffer "ext:elscreen.el" (buffer &optional create))
 (declare-function elscreen-find-file "ext:elscreen.el" (filename))
